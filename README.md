@@ -1,2 +1,2 @@
-# JobsInFinland.Api.Productizer
+# JobsInFinland API Productizer
 Productizer for Jobs in Finland API
