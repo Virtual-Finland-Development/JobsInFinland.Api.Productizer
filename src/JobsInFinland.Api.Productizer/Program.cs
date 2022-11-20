@@ -11,7 +11,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpClient<IJobsInFinlandApiClient, JobsInFinlandApiClient>(client =>
-    client.BaseAddress = new Uri("https://jobsinfinland.fi/api/"));
+    client.BaseAddress = new Uri(
+        builder.Configuration.GetSection("JobsInFinland:ApiBaseAddress").Value ??
+        throw new InvalidOperationException("Missing configuration value for Jobs in Finland API base address")
+    )
+);
 
 var app = builder.Build();
 
