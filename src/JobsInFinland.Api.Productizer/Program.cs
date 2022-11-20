@@ -1,4 +1,6 @@
+using JobsInFinland.Api.Productizer;
 using JobsInFinland.Api.Productizer.Client;
+using JobsInFinland.Api.Productizer.Models.Testbed;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -53,8 +55,14 @@ app.MapPost("jobs", ([FromServices] IJobsInFinlandApiClient client) =>
     });
     */
 
-    var result = client.GetJobsAsync();
-    return result;
+    var response = client.GetJobsAsync();
+
+    if (response.Result == null) return new List<JobPosting>();
+
+    IJobPostingMapper mapper = new JobPostingMapper();
+    var output = mapper.From(response.Result);
+
+    return output;
 });
 
 app.Run();
