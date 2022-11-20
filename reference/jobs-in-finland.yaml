@@ -1,0 +1,210 @@
+openapi: 3.0.1
+info:
+  title: Jobs in Finland
+  version: '1.0'
+  description: API specification for Jobs in Finland API
+  contact:
+    name: Lassi Patanen
+    email: lassi.patanen@gofore.com
+servers:
+  - url: 'http://localhost:3000'
+tags:
+  - name: jobs
+    description: Tag for job endpoints
+paths:
+  /jobs:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - jobs
+      operationId: get-jobs
+      description: Get all jobs
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+components:
+  schemas:
+    Location:
+      type: object
+      properties:
+        city:
+          type: string
+        area:
+          type: string
+        country:
+          type: string
+    Source:
+      type: object
+      properties:
+        apiId:
+          type: string
+        documentId:
+          type: string
+        firstSeen:
+          type: string
+        lastSeen:
+          type: string
+        contactEmail:
+          type: string
+    Employer:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        imageUrl:
+          type: string
+        externalUrl:
+          type: string
+        careersUrl:
+          type: string
+        location:
+          $ref: '#/components/schemas/Location'
+        source:
+          type: string
+        aliasForId:
+          type: string
+    Schedule:
+      type: object
+      properties:
+        publish:
+          type: string
+        expire:
+          type: string
+    Position:
+      type: object
+      properties:
+        x:
+          type: integer
+        'y':
+          type: integer
+    Status:
+      type: object
+      properties:
+        reviewStatus:
+          type: string
+        hiddenBecause:
+          $ref: '#/components/schemas/HiddenBecause'
+        reportedBecause:
+          $ref: '#/components/schemas/ReportedBecause'
+        transformations:
+          $ref: '#/components/schemas/Transformations'
+        publicationStatus:
+          type: string
+    Clustering:
+      type: object
+      properties:
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        position:
+          $ref: '#/components/schemas/Position'
+    HiddenBecause:
+      type: object
+      properties:
+        lowSkilledWork:
+          type: boolean
+        finnishRequired:
+          type: boolean
+        notInFinland:
+          type: boolean
+        jobPostingExpired:
+          type: boolean
+        duplicateJobPosting:
+          type: boolean
+        missingInformation:
+          type: boolean
+        wrongCategory:
+          type: boolean
+        inaccurateTranslation:
+          type: boolean
+        userSubmitted:
+          type: boolean
+        deleted:
+          type: boolean
+    ReportedBecause:
+      type: object
+      properties:
+        finnishRequired:
+          type: integer
+        notInFinland:
+          type: integer
+        jobPostingExpired:
+          type: integer
+        duplicateJobPosting:
+          type: integer
+        missingInformation:
+          type: integer
+        wrongCategory:
+          type: integer
+        inaccurateTranslation:
+          type: integer
+    Transformations:
+      type: object
+      properties:
+        machineTranslated:
+          type: boolean
+        machineHidden:
+          type: boolean
+      x-examples:
+        example-1:
+          machineTranslated: true
+          machineHidden: true
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        confidence:
+          type: integer
+    Tag:
+      type: object
+      properties:
+        id:
+          type: string
+        confidence:
+          type: integer
+      x-examples:
+        example-1:
+          id: string
+          confidence: 0
+    Job:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        imageUrl:
+          type: string
+        externalUrl:
+          type: string
+        employer:
+          $ref: '#/components/schemas/Employer'
+        location:
+          $ref: '#/components/schemas/Location'
+        source:
+          $ref: '#/components/schemas/Source'
+        schedule:
+          $ref: '#/components/schemas/Schedule'
+        clustering:
+          $ref: '#/components/schemas/Clustering'
+        status:
+          $ref: '#/components/schemas/Status'
+  responses: {}
