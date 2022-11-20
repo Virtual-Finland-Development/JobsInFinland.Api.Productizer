@@ -1,3 +1,6 @@
+using JobsInFinland.Api.Productizer;
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddHttpClient<IJobsInFinlandApiClient, JobsInFinlandApiClient>(client =>
+    client.BaseAddress = new Uri("https://jobsinfinland.fi/api/"));
 
 var app = builder.Build();
 
@@ -20,6 +26,31 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapPost("jobs", ([FromServices] IJobsInFinlandApiClient client) =>
+{
+    /*
+    var client = new ApiClient("https://jobsinfinland.fi/api/");
+    var options = new RequestOptions
+    {
+        QueryParameters = new Multimap<string, string>
+        {
+            {
+                "offset", "0"
+            },
+            {
+                "limit", "1"
+            }
+        }
+    };
+    
+    var result = client.Get<Job>("jobs?offset=0&limit=1", options, new Configuration
+    {
+        BasePath = apiBaseUrl
+    });
+    */
+
+    var result = client.GetJobsAsync();
+    return result;
+});
 
 app.Run();
