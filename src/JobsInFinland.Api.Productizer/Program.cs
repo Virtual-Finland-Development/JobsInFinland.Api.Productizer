@@ -1,4 +1,4 @@
-using JobsInFinland.Api.Productizer;
+using JobsInFinland.Api.Productizer.Client;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);

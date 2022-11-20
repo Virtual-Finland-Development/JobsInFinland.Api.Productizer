@@ -1,6 +1,6 @@
 using JobsInFinland.Api.Infrastructure.CodeGen.Model;
 
-namespace JobsInFinland.Api.Productizer;
+namespace JobsInFinland.Api.Productizer.Client;
 
 internal interface IJobsInFinlandApiClient
 {
