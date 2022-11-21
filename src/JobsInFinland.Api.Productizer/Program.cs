@@ -22,7 +22,7 @@ builder.Services.AddHttpClient<IJobsInFinlandApiClient, JobsInFinlandApiClient>(
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsEnvironment("Local"))
 {
     app.UseSwagger();
     app.UseSwaggerUI();
