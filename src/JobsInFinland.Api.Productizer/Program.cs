@@ -32,16 +32,16 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapPost("jobs", ([FromServices] IJobsInFinlandApiClient client) =>
+app.MapPost("jobs", async ([FromServices] IJobsInFinlandApiClient client) =>
 {
-    var response = client.GetJobsAsync();
+    var response = await client.GetJobsAsync();
 
-    if (response.Result == null) return new List<JobPosting>();
+    if (response == null) return new List<JobPosting>();
 
     IJobPostingMapper mapper = new JobPostingMapper();
-    var output = mapper.From(response.Result);
+    var jobs = mapper.From(response);
 
-    return output;
+    return jobs;
 }).Produces<JobPosting>().Produces(401).Produces(500);
 
 app.Run();
