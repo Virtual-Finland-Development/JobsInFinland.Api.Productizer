@@ -11,7 +11,7 @@ internal class JobsInFinlandApiClient : IJobsInFinlandApiClient
         _client = client;
     }
 
-    public async Task<IList<Job>?> GetJobsAsync()
+    public async Task<IList<Job>> GetJobsAsync()
     {
         var response = await _client.GetAsync("jobs?offset=0&limit=2");
         var result = await response.Content.ReadFromJsonAsync<List<Job>>();

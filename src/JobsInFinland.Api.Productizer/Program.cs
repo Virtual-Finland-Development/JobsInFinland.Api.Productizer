@@ -1,3 +1,4 @@
+using JobsInFinland.Api.Infrastructure.CodeGen.Model;
 using JobsInFinland.Api.Productizer.Client;
 using JobsInFinland.Api.Productizer.Models.Testbed;
 using JobsInFinland.Api.Productizer.Services;
@@ -33,15 +34,36 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapPost("jobs", async ([FromServices] IJobsInFinlandApiClient client) =>
-{
-    var response = await client.GetJobsAsync();
+    {
+        IList<Job>? queryResult;
 
-    if (response == null) return new List<JobPosting>();
+        try
+        {
+            queryResult = await client.GetJobsAsync();
+        }
+        catch (HttpRequestException e)
+        {
+            var statusCode = 500;
+            if (e.StatusCode != null) statusCode = (int)e.StatusCode;
 
-    IJobPostingMapper mapper = new JobPostingMapper();
-    var jobs = mapper.From(response);
+            return Results.StatusCode(statusCode);
+        }
 
-    return jobs;
-}).Produces<JobPosting>().Produces(401).Produces(500);
+
+        IJobPostingMapper mapper = new JobPostingMapper();
+        var jobs = mapper.From(queryResult);
+
+        var response = new JobPostingResponse
+        {
+            Results = jobs,
+            TotalCount = jobs.Count
+        };
+
+        return Results.Ok(response);
+    })
+    .Produces<JobPostingResponse>()
+    .Produces(401)
+    .Produces(500)
+    .WithName("FindJobPostings");
 
 app.Run();
