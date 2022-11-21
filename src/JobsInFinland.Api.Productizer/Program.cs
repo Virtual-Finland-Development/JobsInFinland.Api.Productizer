@@ -35,7 +35,7 @@ app.UseAuthorization();
 
 app.MapPost("jobs", async ([FromServices] IJobsInFinlandApiClient client) =>
     {
-        IList<Job>? queryResult;
+        IList<Job> queryResult;
 
         try
         {
