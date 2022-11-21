@@ -2,7 +2,7 @@ using JobsInFinland.Api.Infrastructure.CodeGen.Model;
 using JobsInFinland.Api.Productizer.Models.Testbed;
 using Location = JobsInFinland.Api.Productizer.Models.Testbed.Location;
 
-namespace JobsInFinland.Api.Productizer;
+namespace JobsInFinland.Api.Productizer.Services;
 
 public class JobPostingMapper : IJobPostingMapper
 {

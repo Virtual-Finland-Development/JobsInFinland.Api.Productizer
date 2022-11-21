@@ -1,6 +1,7 @@
 using JobsInFinland.Api.Productizer;
 using JobsInFinland.Api.Productizer.Client;
 using JobsInFinland.Api.Productizer.Models.Testbed;
+using JobsInFinland.Api.Productizer.Services;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
