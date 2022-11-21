@@ -34,27 +34,6 @@ app.UseAuthorization();
 
 app.MapPost("jobs", ([FromServices] IJobsInFinlandApiClient client) =>
 {
-    /*
-    var client = new ApiClient("https://jobsinfinland.fi/api/");
-    var options = new RequestOptions
-    {
-        QueryParameters = new Multimap<string, string>
-        {
-            {
-                "offset", "0"
-            },
-            {
-                "limit", "1"
-            }
-        }
-    };
-    
-    var result = client.Get<Job>("jobs?offset=0&limit=1", options, new Configuration
-    {
-        BasePath = apiBaseUrl
-    });
-    */
-
     var response = client.GetJobsAsync();
 
     if (response.Result == null) return new List<JobPosting>();
