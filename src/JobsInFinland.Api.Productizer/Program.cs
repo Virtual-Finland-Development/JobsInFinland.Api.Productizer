@@ -1,4 +1,3 @@
-using JobsInFinland.Api.Productizer;
 using JobsInFinland.Api.Productizer.Client;
 using JobsInFinland.Api.Productizer.Models.Testbed;
 using JobsInFinland.Api.Productizer.Services;
@@ -64,6 +63,6 @@ app.MapPost("jobs", ([FromServices] IJobsInFinlandApiClient client) =>
     var output = mapper.From(response.Result);
 
     return output;
-});
+}).Produces<JobPosting>().Produces(401).Produces(500);
 
 app.Run();
