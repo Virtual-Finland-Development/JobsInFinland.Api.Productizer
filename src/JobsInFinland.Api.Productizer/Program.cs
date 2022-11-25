@@ -1,5 +1,6 @@
 using JobsInFinland.Api.Infrastructure.CodeGen.Model;
 using JobsInFinland.Api.Productizer.Client;
+using JobsInFinland.Api.Productizer.Models.Request;
 using JobsInFinland.Api.Productizer.Models.Testbed;
 using JobsInFinland.Api.Productizer.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -33,13 +34,13 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapPost("jobs", async ([FromServices] IJobsInFinlandApiClient client) =>
+app.MapPost("jobs", async (HttpRequest request, JobsRequest query, [FromServices] IJobsInFinlandApiClient client) =>
     {
         IList<Job> queryResult;
 
         try
         {
-            queryResult = await client.GetJobsAsync();
+            queryResult = await client.GetJobsAsync(query);
         }
         catch (HttpRequestException e)
         {
