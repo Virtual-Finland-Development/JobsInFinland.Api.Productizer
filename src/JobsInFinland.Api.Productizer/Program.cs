@@ -34,7 +34,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapPost("jobs", async (HttpRequest request, JobsRequest query, [FromServices] IJobsInFinlandApiClient client) =>
+app.MapPost("test/lassipatanen/Job/JobPosting", async (HttpRequest request, JobsRequest query, [FromServices] IJobsInFinlandApiClient client) =>
     {
         IList<Job> queryResult;
 
