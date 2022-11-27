@@ -170,7 +170,7 @@ components:
         name:
           type: string
         confidence:
-          type: integer
+          type: number
     Tag:
       type: object
       properties:
