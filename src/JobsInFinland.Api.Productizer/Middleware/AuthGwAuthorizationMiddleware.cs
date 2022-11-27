@@ -23,7 +23,8 @@ public class AuthGwAuthorizationMiddleware
             if (e.StatusCode != null) statusCode = (int)e.StatusCode;
 
             context.Response.StatusCode = statusCode;
-            await context.Response.WriteAsync("Could not authorize request at Authentication Gateway");
+            await context.Response.WriteAsync(e.Message);
+
             return;
         }
 
