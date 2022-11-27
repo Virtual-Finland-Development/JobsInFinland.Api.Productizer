@@ -47,7 +47,10 @@ app.UseAuthGwHeaderValidation(options =>
     optionsRequiredHeaders.Add("authorization");
     optionsRequiredHeaders.Add("x-authorization-provider");
 });
-app.UseAuthGwAuthorization();
+if (!app.Environment.IsEnvironment("Local"))
+{
+    app.UseAuthGwAuthorization();
+}
 
 app.MapPost("test/lassipatanen/Job/JobPosting", async (
         HttpRequest request,
