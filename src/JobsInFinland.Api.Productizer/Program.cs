@@ -1,5 +1,6 @@
 using JobsInFinland.Api.Infrastructure.CodeGen.Model;
 using JobsInFinland.Api.Productizer.Client;
+using JobsInFinland.Api.Productizer.Middleware;
 using JobsInFinland.Api.Productizer.Models.Request;
 using JobsInFinland.Api.Productizer.Models.Testbed;
 using JobsInFinland.Api.Productizer.Services;
@@ -7,12 +8,20 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddSingleton<IAuthorizationService, AuthorizationService>();
+builder.Services.AddSingleton<IJobsInFinlandApiClient, JobsInFinlandApiClient>();
 
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddHttpClient<IAuthorizationService, AuthorizationService>(client =>
+    client.BaseAddress = new Uri(
+        builder.Configuration.GetSection("AuthGwBaseAddress").Value ??
+        throw new InvalidOperationException("Missing configuration value for Auth GW API base address")
+    )
+);
 
 builder.Services.AddHttpClient<IJobsInFinlandApiClient, JobsInFinlandApiClient>(client =>
     client.BaseAddress = new Uri(
@@ -32,9 +41,18 @@ if (app.Environment.IsEnvironment("Local"))
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseAuthGwHeaderValidation(options =>
+{
+    var optionsRequiredHeaders = options.RequiredHeaders;
+    optionsRequiredHeaders.Add("authorization");
+    optionsRequiredHeaders.Add("x-authorization-provider");
+});
+app.UseAuthGwAuthorization();
 
-app.MapPost("test/lassipatanen/Job/JobPosting", async (HttpRequest request, JobsRequest query, [FromServices] IJobsInFinlandApiClient client) =>
+app.MapPost("test/lassipatanen/Job/JobPosting", async (
+        HttpRequest request,
+        JobsRequest query,
+        [FromServices] IJobsInFinlandApiClient client) =>
     {
         IList<Job> queryResult;
 
