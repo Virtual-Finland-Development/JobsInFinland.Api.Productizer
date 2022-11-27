@@ -27,6 +27,12 @@ public class AuthGwAuthorizationMiddleware
 
             return;
         }
+        catch (Exception e)
+        {
+            context.Response.StatusCode = 500;
+            await context.Response.WriteAsync(e.Message);
+            return;
+        }
 
         await _next.Invoke(context);
     }
