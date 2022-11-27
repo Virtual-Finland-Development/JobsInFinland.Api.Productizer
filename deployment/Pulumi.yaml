@@ -1,0 +1,3 @@
+name: jobs-in-finland-productizer
+description: AWS deployment of Jobs in Finland API productizer
+runtime: dotnet
