@@ -1,4 +1,3 @@
-using JobsInFinland.Api.Productizer.Client;
 using Microsoft.Extensions.Options;
 
 namespace JobsInFinland.Api.Productizer.Middleware;
@@ -31,9 +30,4 @@ public static class AuthGwBuilderExtensions
 
         return builder.UseAuthGwHeaderValidation(options);
     }
-}
-
-public class AuthGwHeaderOptions
-{
-    public List<string> RequiredHeaders { get; } = new();
 }
