@@ -17,7 +17,7 @@ public class JobPostingMapper : IJobPostingMapper
             Employer = job.Employer.Name,
             Location = new Location
             {
-                City = job.Location.City,
+                Municipality = job.Location.City,
                 Postcode = string.Empty
             },
             ApplicationUrl = job.ExternalUrl,
