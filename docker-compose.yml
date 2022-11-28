@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  jif:
+    build:
+      context: ./src
+      dockerfile: JobsInFinland.Api.Productizer/Dockerfile
+    image: virtualfinland/jobs-in-finland-productizer
+    container_name: jobs-in-finland-productizer
+    environment:
+      ASPNETCORE_ENVIRONMENT: Local
+    ports:
+      - "80:80"
+      - "443:443"
+    expose:
+      - 80
+      - 443
