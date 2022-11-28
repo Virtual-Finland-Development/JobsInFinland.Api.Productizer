@@ -2,6 +2,10 @@ name: Run tests
 
 on:
   pull_request
+
+env:
+  PULUMI_ORGANIZATION: virtualfinland
+  PULUMI_STACK: dev
   
 jobs:
   preview-pulumi:
@@ -16,9 +20,9 @@ jobs:
         with:
           dotnet-version: 7.0.x
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore src/JobsInFinland.Api.Productizer
       - name: Build
-        run: dotnet build --no-restore -o ./deployment/release
+        run: dotnet build src/JobsInFinland.Api.Productizer --no-restore -o ./deployment/release
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
