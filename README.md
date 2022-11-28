@@ -13,4 +13,7 @@ To test testbed authentication, set `ASPNETCORE_ENVIRONMENT` to `Development` (o
 inside the docker-compose.yml file. To learn more how to set environment variables with Docker compose refer to the
 official documentation at https://docs.docker.com/compose/environment-variables/
 
+To test the productizer, import the included Postman collection to Postman and fill out the required
+headers `Authorization` and `X-Authorization-Provider`. Authorization header should be Bearer token and provider is
+`testbed` if you have logged in to Access to FInland application using testbed authentication.
 
