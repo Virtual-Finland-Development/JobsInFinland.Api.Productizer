@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "3e6c312d-bddb-460a-8552-a5ebfab45d27",
+		"name": "Jobs in Finland API productizer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Productizer",
+			"item": [
+				{
+					"name": "test/lassipatanen/Job/JobPosting",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Authorization-Provider",
+								"value": "testbed",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query\": \"\",\n    \"location\": {\n        \"countries\": [\n            \"FI\",\n            \"EN\"\n        ],\n        \"regions\": [],\n        \"municipalities\": []\n    },\n    \"paging\": {\n        \"limit\": 1,\n        \"offset\": 0\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:80/test/lassipatanen/Job/JobPosting",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "80",
+							"path": [
+								"test",
+								"lassipatanen",
+								"Job",
+								"JobPosting"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "https://jobsinfinland.fi/api/jobs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://jobsinfinland.fi/api/jobs?offset=0&limit=1",
+							"protocol": "https",
+							"host": [
+								"jobsinfinland",
+								"fi"
+							],
+							"path": [
+								"api",
+								"jobs"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
