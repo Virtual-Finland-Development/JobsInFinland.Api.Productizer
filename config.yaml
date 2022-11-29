@@ -1,0 +1,4 @@
+packageName: "JobsInFinland.Api.Infrastructure.CodeGen"
+packageGuid: "B3F820A8-85EC-462C-BCD9-BAE70F1288E4"
+targetFramework: "net6.0"
+optionalProjectFile: "JobsInFinland.Api.Infrastructure.CodeGen"

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>jobs-in-finland-productizer</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Pulumi" Version="3.*" />
+    <PackageReference Include="Pulumi.Aws" Version="5.21.1" />
+    <PackageReference Include="Pulumi.AwsNative" Version="0.*" />
+    <PackageReference Include="Pulumi.Command" Version="0.5.2" />
+  </ItemGroup>
+
+</Project>

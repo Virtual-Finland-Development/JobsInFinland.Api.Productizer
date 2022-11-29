@@ -1,0 +1,18 @@
+# Ignore stuff
+git_push.sh
+appveyor.yml
+
+# No solution
+JobsInFinland.Api.Infrastructure.CodeGen.sln
+
+# We just want models so no need for API or API Client
+src/JobsInFinland.Api.Infrastructure.CodeGen/Api/*
+src/JobsInFinland.Api.Infrastructure.CodeGen/Client
+!src/CodeGen.Api.TMT/Client/OpenAPIDateConverter.cs
+
+# Noty to docs
+/docs/*.md
+
+# Don't generate .gitignore or README.MD
+.gitignore
+README.md
