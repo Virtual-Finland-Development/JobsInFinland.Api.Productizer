@@ -29,6 +29,8 @@ builder.Services.AddHttpClient<IJobsInFinlandApiClient, JobsInFinlandApiClient>(
     )
 );
 
+builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
