@@ -2,13 +2,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Pulumi;
 using Pulumi.Aws.Iam;
-using Pulumi.AwsNative.IAM.Inputs;
-using Pulumi.AwsNative.Lambda;
-using Pulumi.AwsNative.Lambda.Inputs;
+using Pulumi.Aws.Lambda;
+using Pulumi.Aws.Lambda.Inputs;
 using Pulumi.Command.Local;
-using AwsClassic = Pulumi.Aws;
-using Role = Pulumi.AwsNative.IAM.Role;
-using RoleArgs = Pulumi.AwsNative.IAM.RoleArgs;
 
 public class JobsInFinlandProductizerStack : Stack
 {
@@ -18,10 +14,19 @@ public class JobsInFinlandProductizerStack : Stack
         var environment = Deployment.Instance.StackName;
         var projectName = Deployment.Instance.ProjectName;
         var artifactPath = config.Get("artifactPath") ?? "release/";
+        var tags = new InputMap<string>
+        {
+            {
+                "vfd:stack", environment
+            },
+            {
+                "vfd:project", projectName
+            }
+        };
 
         var role = new Role($"{projectName}-lambda-role-{environment}", new RoleArgs
         {
-            AssumeRolePolicyDocument = JsonSerializer.Serialize(
+            AssumeRolePolicy = JsonSerializer.Serialize(
                 new Dictionary<string, object?>
                 {
                     { "Version", "2012-10-17" },
@@ -42,17 +47,13 @@ public class JobsInFinlandProductizerStack : Stack
                         }
                     }
                 }),
-            Tags = new InputList<RoleTagArgs>
-            {
-                new RoleTagArgs { Key = "vfd:stack", Value = environment },
-                new RoleTagArgs { Key = "vfd:project", Value = projectName }
-            }
+            Tags = tags
         });
 
         var rolePolicyAttachment = new RolePolicyAttachment($"{projectName}-lambda-role-attachment-{environment}",
             new RolePolicyAttachmentArgs
             {
-                Role = Output.Format($"{role.RoleName}"),
+                Role = Output.Format($"{role.Name}"),
                 PolicyArn = ManagedPolicy.AWSLambdaBasicExecutionRole.ToString()
             });
 
@@ -69,21 +70,14 @@ public class JobsInFinlandProductizerStack : Stack
                     { "ASPNETCORE_ENVIRONMENT", environment }
                 }
             },
-            Tags = new InputList<FunctionTagArgs>
-            {
-                new FunctionTagArgs { Key = "vfd:stack", Value = environment },
-                new FunctionTagArgs { Key = "vfd:project", Value = projectName }
-            },
-            Code = new FunctionCodeArgs
-            {
-                ZipFile = new FileArchive(artifactPath).ToString() ?? artifactPath
-            }
+            Tags = tags,
+            Code = new FileArchive(artifactPath)
         });
 
-        var functionUrl = new Url($"{projectName}-function-url-{environment}", new UrlArgs
+        var functionUrl = new FunctionUrl($"{projectName}-function-url-{environment}", new FunctionUrlArgs
         {
-            TargetFunctionArn = lambdaFunction.Arn,
-            AuthType = UrlAuthType.None
+            FunctionName = lambdaFunction.Arn,
+            AuthorizationType = "NONE"
         });
 
         var command = new Command($"{projectName}-add-permissions-command-{environment}", new CommandArgs
@@ -100,7 +94,7 @@ public class JobsInFinlandProductizerStack : Stack
             }
         );
 
-        ApplicationUrl = functionUrl.FunctionUrl;
+        ApplicationUrl = functionUrl.FunctionUrlResult;
     }
 
     [Output] public Output<string> ApplicationUrl { get; set; }
