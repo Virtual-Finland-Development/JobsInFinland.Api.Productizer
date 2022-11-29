@@ -18,6 +18,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient<IAuthorizationService, AuthorizationService>(client =>
     client.BaseAddress = new Uri(
         builder.Configuration.GetSection("AuthGwBaseAddress").Value ??
+        Environment.GetEnvironmentVariable("AuthGwBaseAddress") ??
         throw new InvalidOperationException("Missing configuration value for Auth GW API base address")
     )
 );
