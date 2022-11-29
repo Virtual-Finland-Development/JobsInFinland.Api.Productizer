@@ -47,7 +47,6 @@ app.UseAuthGwHeaderValidation(options =>
 {
     var optionsRequiredHeaders = options.RequiredHeaders;
     optionsRequiredHeaders.Add("authorization");
-    optionsRequiredHeaders.Add("x-authorization-provider");
 });
 if (!app.Environment.IsEnvironment("Local"))
 {
