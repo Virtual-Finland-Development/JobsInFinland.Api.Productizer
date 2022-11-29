@@ -60,7 +60,7 @@ public class JobsInFinlandProductizerStack : Stack
         var lambdaFunction = new Function($"{projectName}-{environment}", new FunctionArgs
         {
             Role = role.Arn,
-            Runtime = "dotnet7",
+            Runtime = "dotnet6",
             Handler = "JobsInFinland.Api.Productizer",
             Timeout = 15,
             Environment = new FunctionEnvironmentArgs
