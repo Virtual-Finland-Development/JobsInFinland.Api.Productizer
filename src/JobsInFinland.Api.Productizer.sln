@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsInFinland.Api.Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsInFinland.Api.Deployment", "..\deployment\JobsInFinland.Api.Deployment.csproj", "{F8D19544-0074-4991-BE3E-F544A893BA96}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsInFinland.Api.Productizer.UnitTests", "JobsInFinland.Api.Productizer.UnitTests\JobsInFinland.Api.Productizer.UnitTests.csproj", "{9C1C62E6-C2A2-4892-974F-6F4E2FF96D1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{F8D19544-0074-4991-BE3E-F544A893BA96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8D19544-0074-4991-BE3E-F544A893BA96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8D19544-0074-4991-BE3E-F544A893BA96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C1C62E6-C2A2-4892-974F-6F4E2FF96D1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C1C62E6-C2A2-4892-974F-6F4E2FF96D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C1C62E6-C2A2-4892-974F-6F4E2FF96D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C1C62E6-C2A2-4892-974F-6F4E2FF96D1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
