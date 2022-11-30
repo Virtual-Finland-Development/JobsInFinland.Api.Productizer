@@ -57,6 +57,9 @@ public class JobsInFinlandProductizerStack : Stack
                 PolicyArn = ManagedPolicy.AWSLambdaBasicExecutionRole.ToString()
             });
 
+        var authenticationGatewayRef =
+            new StackReference($"{Deployment.Instance.OrganizationName}/authentication-gw/{environment}");
+
         var lambdaFunction = new Function($"{projectName}-{environment}", new FunctionArgs
         {
             Role = role.Arn,
@@ -67,7 +70,8 @@ public class JobsInFinlandProductizerStack : Stack
             {
                 Variables = new InputMap<string>
                 {
-                    { "ASPNETCORE_ENVIRONMENT", environment }
+                    { "ASPNETCORE_ENVIRONMENT", environment },
+                    { "AUTH_GW_BASE_ADDRESS", authenticationGatewayRef.GetOutput("endpoint").ToString() }
                 }
             },
             Tags = tags,

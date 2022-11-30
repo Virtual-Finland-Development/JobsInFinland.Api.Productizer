@@ -20,8 +20,6 @@ jobs:
         run: dotnet restore src/JobsInFinland.Api.Productizer
       - name: Build
         run: dotnet build src/JobsInFinland.Api.Productizer --no-restore
-        env:
-          AuthGwBaseAddress: ${{ secrets.AUTHENTICATION_GW_URL }}
       - name: Publish
         run: dotnet publish src/JobsInFinland.Api.Productizer/JobsInFinland.Api.Productizer.csproj -c Release -o release --nologo
       - name: Upload build artifact
