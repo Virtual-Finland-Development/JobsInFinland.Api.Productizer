@@ -71,7 +71,7 @@ public class JobsInFinlandProductizerStack : Stack
                 Variables = new InputMap<string>
                 {
                     { "ASPNETCORE_ENVIRONMENT", environment },
-                    { "AUTH_GW_BASE_ADDRESS", authenticationGatewayRef.GetOutput("endpoint").ToString() }
+                    { "AuthGwBaseAddress", authenticationGatewayRef.GetOutput("endpoint").ToString() }
                 }
             },
             Tags = tags,
