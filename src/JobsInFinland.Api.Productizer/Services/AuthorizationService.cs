@@ -2,7 +2,7 @@ using System.Net;
 
 namespace JobsInFinland.Api.Productizer.Services;
 
-internal class AuthorizationService : IAuthorizationService
+public class AuthorizationService : IAuthorizationService
 {
     private readonly HttpClient _client;
 
