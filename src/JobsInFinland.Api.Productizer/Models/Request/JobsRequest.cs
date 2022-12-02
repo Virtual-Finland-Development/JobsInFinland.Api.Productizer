@@ -16,6 +16,6 @@ public class LocationQuery
 
 public class PagingOptions
 {
-    public int Limit { get; set; } = 100;
+    public int? Limit { get; set; } = 100;
     public int Offset { get; set; } = 0;
 }

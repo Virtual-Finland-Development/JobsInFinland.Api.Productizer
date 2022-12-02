@@ -3,11 +3,11 @@ using JobsInFinland.Api.Productizer.Models.Request;
 
 namespace JobsInFinland.Api.Productizer.Client;
 
-internal class RequestUriBuilder
+public class RequestUriBuilder
 {
     private readonly Dictionary<string, string> _options = new();
     private string _endpoint = "";
-    private int _limit = 1;
+    private int? _limit;
     private int _offset;
 
     public RequestUriBuilder WithEndpoint(string value)
@@ -32,7 +32,12 @@ internal class RequestUriBuilder
     public string Build()
     {
         var builder = new StringBuilder();
-        builder.Append($"{_endpoint}?offset={_offset}&limit={_limit}");
+        builder.Append($"{_endpoint}?offset={_offset}");
+
+        if (_limit != null)
+        {
+            builder.Append($"&limit={_limit}");
+        }
 
         if (_options.Count <= 0) return builder.ToString();
 
