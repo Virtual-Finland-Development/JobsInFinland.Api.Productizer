@@ -32,6 +32,8 @@ public class AuthGwHeaderValidationMiddleware
 
     public static bool IsHeaderValid(IReadOnlyDictionary<string, string> headers, string key)
     {
+        if (headers.Count == 0) return false;
+        
         var hasValue = headers.TryGetValue(key, out var value);
         
         if (!hasValue)
