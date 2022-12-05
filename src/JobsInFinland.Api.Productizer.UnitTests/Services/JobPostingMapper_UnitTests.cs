@@ -5,6 +5,7 @@ using JobsInFinland.Api.Productizer.UnitTests.Builders.Codegen;
 
 namespace JobsInFinland.Api.Productizer.UnitTests.Services;
 
+[TestFixture]
 // ReSharper disable once InconsistentNaming
 public class JobPostingMapper_UnitTests
 {
