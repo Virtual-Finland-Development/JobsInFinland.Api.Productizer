@@ -14,7 +14,7 @@ namespace JobsInFinland.Api.Productizer.UnitTests.Middleware;
 // ReSharper disable once InconsistentNaming
 public class AuthGwHeaderValidationMiddleware_UnitTests
 {
-    // TODO: This doesn't actually work like it's supposed to
+    // TODO: This doesn't actually work like it's supposed to ":D"
     [Test]
     public async Task Invoke_WithMissingHeaders_ShouldThrowException401()
     {
@@ -75,4 +75,3 @@ public class AuthGwHeaderValidationMiddleware_UnitTests
         actual.Should().BeFalse();
     }
 }
-
