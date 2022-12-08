@@ -22,9 +22,9 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore src/JobsInFinland.Api.Productizer
       - name: Build
-        run: dotnet build src/JobsInFinland.Api.Productizer --no-restore -o deployment/release
+        run: dotnet build src/JobsInFinland.Api.Productizer --no-restore -o release
       - name: Test
-        run: dotnet test deployment/release/JobsInFinland.Api.Productizer.UnitTests.dll --no-build --verbosity normal
+        run: dotnet test release/JobsInFinland.Api.Productizer.UnitTests.dll --no-build --verbosity normal
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
