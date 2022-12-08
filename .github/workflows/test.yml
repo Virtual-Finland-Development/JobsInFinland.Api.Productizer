@@ -20,11 +20,11 @@ jobs:
         with:
           dotnet-version: 6.0.x
       - name: Restore dependencies
-        run: dotnet restore src/JobsInFinland.Api.Productizer
+        run: dotnet restore src/JobsInFinland.Api.Productizer.sln
       - name: Build
-        run: dotnet build src/JobsInFinland.Api.Productizer --no-restore -o ./release
+        run: dotnet build src/JobsInFinland.Api.Productizer.sln --no-restore -o release
       - name: Test
-        run: dotnet test release/JobsInFinland.Api.Productizer.UnitTests.dll --no-build --verbosity normal
+        run: dotnet test release/JobsInFinland.Api.Productizer.UnitTests.dll --verbosity normal
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
