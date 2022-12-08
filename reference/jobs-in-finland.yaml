@@ -25,9 +25,8 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Job'
+                $ref: '#/components/schemas/GetJobsResponse'
+              examples: {}
 components:
   schemas:
     Location:
@@ -207,4 +206,47 @@ components:
           $ref: '#/components/schemas/Clustering'
         status:
           $ref: '#/components/schemas/Status'
+    MetaCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        count:
+          type: integer
+      x-examples:
+        example-1:
+          id: manufacturing
+          count: 2
+    MetaCities:
+      type: object
+      properties:
+        name:
+          type: string
+        count:
+          type: integer
+      x-examples:
+        example-1:
+          name: Lappeenranta
+          count: 6
+    GetJobsResponse:
+      title: GetJobsResponse
+      x-stoplight:
+        id: svyhvvhy8akmr
+      type: object
+      properties:
+        total:
+          type: integer
+        cities:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetaCities'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetaCategory'
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/Job'
+      description: Response model for data coming from Jobs in Finland API when meta=true
   responses: {}
