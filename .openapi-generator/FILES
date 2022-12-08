@@ -19,9 +19,12 @@ src/JobsInFinland.Api.Infrastructure.CodeGen/Model/AbstractOpenAPISchema.cs
 src/JobsInFinland.Api.Infrastructure.CodeGen/Model/Category.cs
 src/JobsInFinland.Api.Infrastructure.CodeGen/Model/Clustering.cs
 src/JobsInFinland.Api.Infrastructure.CodeGen/Model/Employer.cs
+src/JobsInFinland.Api.Infrastructure.CodeGen/Model/GetJobsResponse.cs
 src/JobsInFinland.Api.Infrastructure.CodeGen/Model/HiddenBecause.cs
 src/JobsInFinland.Api.Infrastructure.CodeGen/Model/Job.cs
 src/JobsInFinland.Api.Infrastructure.CodeGen/Model/Location.cs
+src/JobsInFinland.Api.Infrastructure.CodeGen/Model/MetaCategory.cs
+src/JobsInFinland.Api.Infrastructure.CodeGen/Model/MetaCities.cs
 src/JobsInFinland.Api.Infrastructure.CodeGen/Model/Position.cs
 src/JobsInFinland.Api.Infrastructure.CodeGen/Model/ReportedBecause.cs
 src/JobsInFinland.Api.Infrastructure.CodeGen/Model/Schedule.cs
