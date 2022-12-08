@@ -32,7 +32,7 @@ public class RequestUriBuilder
     public string Build()
     {
         var builder = new StringBuilder();
-        builder.Append($"{_endpoint}?offset={_offset}");
+        builder.Append($"{_endpoint}?meta=true&offset={_offset}");
 
         if (_limit != null)
         {
