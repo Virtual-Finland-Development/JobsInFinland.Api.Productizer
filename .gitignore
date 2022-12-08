@@ -73,6 +73,7 @@ StyleCopReport.xml
 
 # Rider
 */.idea
+.idea
 
 # Files built by Visual Studio
 *_i.c

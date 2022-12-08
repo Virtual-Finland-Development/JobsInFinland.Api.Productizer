@@ -30,8 +30,10 @@ public class AuthGwHeaderValidationMiddleware
         await _next.Invoke(context);
     }
 
-    private static bool IsHeaderValid(IReadOnlyDictionary<string, string> headers, string key)
+    public static bool IsHeaderValid(IReadOnlyDictionary<string, string> headers, string key)
     {
+        if (headers.Count == 0) return false;
+        
         var hasValue = headers.TryGetValue(key, out var value);
         
         if (!hasValue)
