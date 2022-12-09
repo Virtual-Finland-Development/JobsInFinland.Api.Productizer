@@ -60,14 +60,14 @@ public class RequestUriBuilder_UnitTests
             .WithCity("Lappeenranta")
             .WithCategory("consulting")
             .WithSorting("title")
-            .OrderBy("name", RequestUriBuilder.Direction.Descending)
+            .OrderBy(RequestUriBuilder.Direction.Descending)
             .WithQueryOption(new KeyValuePair<string, string>("key", "value"))
             .Build();
 
         actual.Should().BeOfType<string>();
         actual.Should()
             .BeEquivalentTo(
-                "jobs?meta=true&offset=0&limit=1&city=Lappeenranta&category=consulting&sort=title&order=-name&key=value");
+                "jobs?meta=true&offset=0&limit=1&city=Lappeenranta&category=consulting&sort=title&order=-1&key=value");
     }
 }
 
