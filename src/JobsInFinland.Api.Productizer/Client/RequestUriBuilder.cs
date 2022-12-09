@@ -54,7 +54,7 @@ public class RequestUriBuilder
 
     /// <summary>
     ///     Sort order
-    ///     Available values : -1, 1
+    ///     Available values : -1 = Descending, 1 = Ascending
     /// </summary>
     /// <param name="direction"></param>
     /// <returns></returns>
@@ -74,7 +74,7 @@ public class RequestUriBuilder
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    public RequestUriBuilder WithCity(string value)
+    public RequestUriBuilder WithCity(string? value)
     {
         _city = value;
         return this;
@@ -98,9 +98,13 @@ public class RequestUriBuilder
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    public RequestUriBuilder WithQuery(string value)
+    public RequestUriBuilder WithQuery(string? value)
     {
-        _query = value;
+        if (!string.IsNullOrEmpty(value))
+        {
+            _query = value;
+        }
+        
         return this;
     }
 
