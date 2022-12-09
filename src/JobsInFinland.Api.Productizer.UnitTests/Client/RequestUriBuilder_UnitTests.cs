@@ -18,7 +18,6 @@ public class RequestUriBuilder_UnitTests
 
         actual.Should().BeOfType<string>();
         actual.Should().NotContain("&limit");
-
     }
 
     [Test]
@@ -32,7 +31,7 @@ public class RequestUriBuilder_UnitTests
             .Build();
 
         actual.Should().BeOfType<string>();
-        actual.Should().BeEquivalentTo("jobs?offset=2&limit=1");
+        actual.Should().BeEquivalentTo("jobs?meta=true&offset=2&limit=1");
     }
 
     [Test]
@@ -47,6 +46,28 @@ public class RequestUriBuilder_UnitTests
             .Build();
 
         actual.Should().BeOfType<string>();
-        actual.Should().BeEquivalentTo("jobs?offset=0&limit=1&key=value");
+        actual.Should().BeEquivalentTo("jobs?meta=true&offset=0&limit=1&key=value");
+    }
+
+    [Test]
+    public void CreatingSearchQuery_WithAllOptions_ShouldReturnString()
+    {
+        var sut = new RequestUriBuilder();
+
+        var actual = sut
+            .WithEndpoint("jobs")
+            .WithPaging(new PagingOptions { Limit = 1, Offset = 0 })
+            .WithCity("Lappeenranta")
+            .WithCategory("consulting")
+            .WithSorting("title")
+            .OrderBy("name", RequestUriBuilder.Direction.Descending)
+            .WithQueryOption(new KeyValuePair<string, string>("key", "value"))
+            .Build();
+
+        actual.Should().BeOfType<string>();
+        actual.Should()
+            .BeEquivalentTo(
+                "jobs?meta=true&offset=0&limit=1&city=Lappeenranta&category=consulting&sort=title&order=-name&key=value");
     }
 }
+
