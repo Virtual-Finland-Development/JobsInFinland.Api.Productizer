@@ -14,19 +14,29 @@ internal class JobsInFinlandApiClient : IJobsInFinlandApiClient
 
     public async Task<IList<Job>> GetJobsAsync(JobsRequest jobsRequest)
     {
+        string? cities = null;
+        if (jobsRequest.Location.Municipalities.Any())
+        {
+            cities = string.Join(",", jobsRequest.Location.Municipalities);
+        }
 
         var requestUri = new RequestUriBuilder()
             .WithEndpoint("jobs")
             .WithPaging(jobsRequest.Paging)
+            .WithQuery(jobsRequest.Query)
+            .WithCity(cities)
+            .WithSorting("schedule.publish")
+            .OrderBy(RequestUriBuilder.Direction.Descending)
             .Build();
 
         var response = await _client.GetAsync(requestUri);
-        var result = await response.Content.ReadFromJsonAsync<List<Job>>();
+        var result = await response.Content.ReadFromJsonAsync<GetJobsResponse>();
 
         var jobs = new List<Job>();
         if (result == null) return jobs;
-        jobs = result;
+        jobs = result.Records;
 
         return jobs;
     }
 }
+
