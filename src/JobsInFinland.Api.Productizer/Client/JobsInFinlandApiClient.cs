@@ -1,24 +1,25 @@
 using JobsInFinland.Api.Infrastructure.CodeGen.Model;
 using JobsInFinland.Api.Productizer.Models.Request;
+using JobsInFinland.Api.Productizer.Services;
 
 namespace JobsInFinland.Api.Productizer.Client;
 
 internal class JobsInFinlandApiClient : IJobsInFinlandApiClient
 {
     private readonly HttpClient _client;
+    private readonly ILocationCodeMapper _locationCodeMapper;
 
-    public JobsInFinlandApiClient(HttpClient client)
+    public JobsInFinlandApiClient(HttpClient client, ILocationCodeMapper locationCodeMapper)
     {
         _client = client;
+        _locationCodeMapper = locationCodeMapper;
     }
 
     public async Task<IList<Job>> GetJobsAsync(JobsRequest jobsRequest)
     {
+        var cityNames = _locationCodeMapper.GetNamesFromCodes(jobsRequest.Location.Municipalities);
         string? cities = null;
-        if (jobsRequest.Location.Municipalities.Any())
-        {
-            cities = string.Join(",", jobsRequest.Location.Municipalities);
-        }
+        if (cityNames.Any()) cities = string.Join(",", cityNames);
 
         var requestUri = new RequestUriBuilder()
             .WithEndpoint("jobs")
@@ -33,10 +34,13 @@ internal class JobsInFinlandApiClient : IJobsInFinlandApiClient
         var result = await response.Content.ReadFromJsonAsync<GetJobsResponse>();
 
         var jobs = new List<Job>();
+
         if (result == null) return jobs;
+
         jobs = result.Records;
 
         return jobs;
     }
 }
+
 
