@@ -1,3 +1,4 @@
+// ReSharper disable ClassNeverInstantiated.Global
 namespace JobsInFinland.Api.Productizer.Models.Request;
 
 public class JobsRequest
