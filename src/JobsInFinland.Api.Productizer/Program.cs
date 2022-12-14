@@ -55,7 +55,6 @@ if (!app.Environment.IsEnvironment("Local"))
 }
 
 app.MapPost("test/lassipatanen/Job/JobPosting", async (
-        HttpRequest request,
         JobsRequest query,
         [FromServices] IJobsInFinlandApiClient client) =>
     {
