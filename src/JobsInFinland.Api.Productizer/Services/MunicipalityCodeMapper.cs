@@ -1,6 +1,6 @@
 namespace JobsInFinland.Api.Productizer.Services;
 
-public class MunicipalityCodeMapper : ILocationCodeMapper
+public class MunicipalityCodeMapper : ICodeMapper
 {
     private readonly IDictionary<string, string> _codeset;
 
@@ -22,7 +22,4 @@ public class MunicipalityCodeMapper : ILocationCodeMapper
         return names;
     }
 }
-
-
-
 

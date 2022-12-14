@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<IAuthorizationService, AuthorizationService>();
 builder.Services.AddSingleton<IJobsInFinlandApiClient, JobsInFinlandApiClient>();
 builder.Services.AddSingleton<ICodesetService, CodesetService>();
-builder.Services.AddSingleton<ILocationCodeMapper, MunicipalityCodeMapper>();
+builder.Services.AddSingleton<ICodeMapper, MunicipalityCodeMapper>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

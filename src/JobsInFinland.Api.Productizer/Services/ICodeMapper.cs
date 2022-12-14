@@ -1,6 +1,6 @@
 namespace JobsInFinland.Api.Productizer.Services;
 
-public interface ILocationCodeMapper
+public interface ICodeMapper
 {
     public IReadOnlyList<string> GetNamesFromCodes(IEnumerable<string> codes);
 }

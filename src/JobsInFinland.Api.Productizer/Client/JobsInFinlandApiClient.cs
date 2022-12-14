@@ -7,17 +7,17 @@ namespace JobsInFinland.Api.Productizer.Client;
 internal class JobsInFinlandApiClient : IJobsInFinlandApiClient
 {
     private readonly HttpClient _client;
-    private readonly ILocationCodeMapper _locationCodeMapper;
+    private readonly ICodeMapper _municipalityCodeMapper;
 
-    public JobsInFinlandApiClient(HttpClient client, ILocationCodeMapper locationCodeMapper)
+    public JobsInFinlandApiClient(HttpClient client, ICodeMapper municipalityCodeMapper)
     {
         _client = client;
-        _locationCodeMapper = locationCodeMapper;
+        _municipalityCodeMapper = municipalityCodeMapper;
     }
 
     public async Task<IList<Job>> GetJobsAsync(JobsRequest jobsRequest)
     {
-        var cityNames = _locationCodeMapper.GetNamesFromCodes(jobsRequest.Location.Municipalities);
+        var cityNames = _municipalityCodeMapper.GetNamesFromCodes(jobsRequest.Location.Municipalities);
         string? cities = null;
         if (cityNames.Any()) cities = string.Join(",", cityNames);
 
