@@ -1,7 +1,7 @@
 using System.Text.Json;
 using JobsInFinland.Api.Productizer.Models.Data;
 
-namespace JobsInFinland.Api.Productizer.Services;
+namespace JobsInFinland.Api.Productizer.Services.Codeset;
 
 public class MunicipalityCodesetService : IMunicipalityCodesetService
 {

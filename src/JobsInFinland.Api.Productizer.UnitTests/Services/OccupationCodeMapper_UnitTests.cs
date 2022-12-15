@@ -1,5 +1,6 @@
 using FluentAssertions;
 using JobsInFinland.Api.Productizer.Services;
+using JobsInFinland.Api.Productizer.Services.Codeset;
 
 namespace JobsInFinland.Api.Productizer.UnitTests.Services;
 

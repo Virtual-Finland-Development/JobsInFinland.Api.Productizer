@@ -1,4 +1,4 @@
-namespace JobsInFinland.Api.Productizer.Services;
+namespace JobsInFinland.Api.Productizer.Services.Codeset;
 
 public interface ICodesetService
 {

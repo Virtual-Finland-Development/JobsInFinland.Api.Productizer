@@ -1,3 +1,5 @@
+using JobsInFinland.Api.Productizer.Services.Codeset;
+
 namespace JobsInFinland.Api.Productizer.Services;
 
 public class OccupationCodeMapper : IOccupationCodeMapper

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace JobsInFinland.Api.Productizer.Services;
+namespace JobsInFinland.Api.Productizer.Models.Data;
 
 // ReSharper disable once ClassNeverInstantiated.Global
 public class OccupationCodeset

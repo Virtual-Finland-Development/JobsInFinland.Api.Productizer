@@ -1,7 +1,8 @@
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using JobsInFinland.Api.Productizer.Models.Data;
 
-namespace JobsInFinland.Api.Productizer.Services;
+namespace JobsInFinland.Api.Productizer.Services.Codeset;
 
 public class OccupationCodesetService : IOccupationCodesetService
 {
