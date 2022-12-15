@@ -172,15 +172,15 @@ components:
           type: number
     Tag:
       type: object
-      properties:
-        id:
-          type: string
-        confidence:
-          type: integer
       x-examples:
         example-1:
           id: string
           confidence: 0
+      properties:
+        id:
+          type: string
+        confidence:
+          type: number
     Job:
       type: object
       properties:
