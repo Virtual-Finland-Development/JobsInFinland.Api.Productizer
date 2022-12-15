@@ -13,7 +13,7 @@ public class OccupationCodesetService : IOccupationCodesetService
 
         try
         {
-            using var reader = new StreamReader("data/esco-1.1.0-occupations.json");
+            using var reader = new StreamReader("Data/esco-1.1.0-occupations.json");
             var stream = reader.ReadToEnd();
 
             var codeJsonObject = JsonSerializer.Deserialize<List<OccupationCodeset>>(stream);

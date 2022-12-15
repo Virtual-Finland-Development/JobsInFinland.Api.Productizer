@@ -12,7 +12,7 @@ public class MunicipalityCodesetService : IMunicipalityCodesetService
         _codes = new Dictionary<string, string>();
         try
         {
-            using var reader = new StreamReader("data/municipalities.json");
+            using var reader = new StreamReader("Data/municipalities.json");
             var stream = reader.ReadToEnd();
 
             var codeJsonObject = JsonSerializer.Deserialize<List<MunicipalityCodeset>>(stream);
