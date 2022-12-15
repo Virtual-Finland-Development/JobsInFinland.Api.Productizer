@@ -29,9 +29,7 @@ public class OccupationCodesetService : IOccupationCodesetService
                 var pattern = new Regex("\\WC[0-9]*");
                 var matches = pattern.Match(o.Uri);
                 if (!matches.Success) continue;
-
-                // Drop first character from string as TMT API uses C01 code without the C letter
-                // This is probably the same as the code in notation field
+                
                 _codes.TryAdd(o.Notation, o.PrefLabel.En);
             }
         }
