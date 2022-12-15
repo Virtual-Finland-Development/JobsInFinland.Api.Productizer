@@ -7,28 +7,49 @@ namespace JobsInFinland.Api.Productizer.Client;
 internal class JobsInFinlandApiClient : IJobsInFinlandApiClient
 {
     private readonly HttpClient _client;
-    private readonly ICodeMapper _municipalityCodeMapper;
+    private readonly ILogger<JobsInFinlandApiClient> _logger;
+    private readonly IMunicipalityCodeMapper _municipalityCodeMapper;
+    private readonly IOccupationCodeMapper _occupationCodeMapper;
 
-    public JobsInFinlandApiClient(HttpClient client, ICodeMapper municipalityCodeMapper)
+    public JobsInFinlandApiClient(
+        HttpClient client,
+        IMunicipalityCodeMapper municipalityCodeMapper,
+        IOccupationCodeMapper occupationCodeMapper,
+        ILogger<JobsInFinlandApiClient> logger)
     {
         _client = client;
         _municipalityCodeMapper = municipalityCodeMapper;
+        _occupationCodeMapper = occupationCodeMapper;
+        _logger = logger;
     }
 
     public async Task<IList<Job>> GetJobsAsync(JobsRequest jobsRequest)
     {
-        var cityNames = _municipalityCodeMapper.GetNamesFromCodes(jobsRequest.Location.Municipalities);
+        string? query = null;
         string? cities = null;
-        if (cityNames.Any()) cities = string.Join(",", cityNames);
+
+        var cityNames = _municipalityCodeMapper.GetNamesFromCodes(jobsRequest.Location.Municipalities);
+
+        if (cityNames.Any())
+            cities = string.Join(",", cityNames);
+
+        var occupationNames = _occupationCodeMapper.GetNamesFromCodes(jobsRequest.Occupations);
+        if (occupationNames.Any())
+            query = string.Join(" ", occupationNames);
+
+        if (!string.IsNullOrEmpty(jobsRequest.Query))
+            query = $"{query} {jobsRequest.Query}";
 
         var requestUri = new RequestUriBuilder()
             .WithEndpoint("jobs")
             .WithPaging(jobsRequest.Paging)
-            .WithQuery(jobsRequest.Query)
+            .WithQuery(query)
             .WithCity(cities)
             .WithSorting("schedule.publish")
             .OrderBy(RequestUriBuilder.Direction.Descending)
             .Build();
+
+        _logger.LogInformation("RequestUri is: {RequestUri}", requestUri);
 
         var response = await _client.GetAsync(requestUri);
         var result = await response.Content.ReadFromJsonAsync<GetJobsResponse>();

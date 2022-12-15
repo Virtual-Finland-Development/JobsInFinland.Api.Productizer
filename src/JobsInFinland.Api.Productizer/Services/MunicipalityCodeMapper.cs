@@ -1,10 +1,10 @@
 namespace JobsInFinland.Api.Productizer.Services;
 
-public class MunicipalityCodeMapper : ICodeMapper
+public class MunicipalityCodeMapper : IMunicipalityCodeMapper
 {
     private readonly IDictionary<string, string> _codeset;
 
-    public MunicipalityCodeMapper(ICodesetService codesetService)
+    public MunicipalityCodeMapper(IMunicipalityCodesetService codesetService)
     {
         _codeset = codesetService.GetCodeset();
     }

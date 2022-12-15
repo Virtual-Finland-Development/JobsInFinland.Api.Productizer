@@ -4,3 +4,12 @@ public interface ICodesetService
 {
     IDictionary<string, string> GetCodeset();
 }
+
+public interface IOccupationCodesetService : ICodesetService
+{
+}
+
+public interface IMunicipalityCodesetService : ICodesetService
+{
+}
+

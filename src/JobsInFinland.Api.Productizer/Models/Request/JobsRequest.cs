@@ -1,4 +1,5 @@
 // ReSharper disable ClassNeverInstantiated.Global
+
 namespace JobsInFinland.Api.Productizer.Models.Request;
 
 public class JobsRequest
@@ -6,6 +7,7 @@ public class JobsRequest
     public string Query { get; set; } = null!;
     public LocationQuery Location { get; set; } = null!;
     public PagingOptions Paging { get; set; } = null!;
+    public List<string> Occupations { get; set; } = null!;
 }
 
 public class LocationQuery
@@ -20,3 +22,4 @@ public class PagingOptions
     public int? Limit { get; init; } = 100;
     public int Offset { get; init; } = 0;
 }
+
