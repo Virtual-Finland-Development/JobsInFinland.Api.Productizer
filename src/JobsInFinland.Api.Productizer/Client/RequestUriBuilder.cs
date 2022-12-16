@@ -1,4 +1,5 @@
 using System.Text;
+using System.Web;
 using JobsInFinland.Api.Productizer.Models.Request;
 
 namespace JobsInFinland.Api.Productizer.Client;
@@ -124,9 +125,9 @@ public class RequestUriBuilder
 
         // Custom search params
         if (_limit != null) builder.Append($"&limit={_limit}");
-        if (_city != null) builder.Append($"&city={_city}");
-        if (_category != null) builder.Append($"&category={_category}");
-        if (_query != null) builder.Append($"&query={_query}");
+        if (_city != null) builder.Append($"&city={HttpUtility.UrlPathEncode(_city)}");
+        if (_category != null) builder.Append($"&category={HttpUtility.UrlPathEncode(_category)}");
+        if (_query != null) builder.Append($"&query={HttpUtility.UrlPathEncode(_query)}");
         if (_sorting != null) builder.Append($"&sort={_sorting}");
         if (_order != null) builder.Append($"&order={_order}");
 
@@ -135,11 +136,10 @@ public class RequestUriBuilder
 
         foreach (var option in _options)
         {
-            var param = $"&{option.Key}={option.Value}";
+            var param = $"&{option.Key}={HttpUtility.UrlPathEncode(option.Value)}";
             builder.Append(param);
         }
-
-        // TODO: URL encode string
+        
         return builder.ToString();
     }
 }
