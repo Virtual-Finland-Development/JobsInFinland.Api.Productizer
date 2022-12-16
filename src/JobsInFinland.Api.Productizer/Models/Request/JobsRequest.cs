@@ -6,7 +6,7 @@ public class JobsRequest
 {
     public string Query { get; set; } = null!;
     public LocationQuery Location { get; set; } = null!;
-    public Requirements Requirements { get; set; }
+    public Requirements Requirements { get; set; } = null!;
     public PagingOptions Paging { get; set; } = null!;
 }
 
@@ -28,4 +28,3 @@ public class PagingOptions
     public int? Limit { get; init; } = 100;
     public int Offset { get; init; } = 0;
 }
-

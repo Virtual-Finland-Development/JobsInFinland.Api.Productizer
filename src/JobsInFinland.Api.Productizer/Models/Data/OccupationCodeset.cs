@@ -1,8 +1,10 @@
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+
 using System.Text.Json.Serialization;
 
 namespace JobsInFinland.Api.Productizer.Models.Data;
 
-// ReSharper disable once ClassNeverInstantiated.Global
 public class OccupationCodeset
 {
     [JsonPropertyName("uri")]
@@ -13,9 +15,8 @@ public class OccupationCodeset
     
     [JsonPropertyName("notation")]
     public string? Notation { get; set; }
-    
-    [JsonPropertyName("prefLabel")]
-    public PreferredLabel PrefLabel { get; set; }
+
+    [JsonPropertyName("prefLabel")] public PreferredLabel PrefLabel { get; set; } = null!;
     
     [JsonPropertyName("altLabel")]
     public AlternateLabel? AltLabel { get; set; }
@@ -27,36 +28,18 @@ public class OccupationCodeset
     public List<string>? RelatedEssentialSkills { get; set; }
 }
 
-// ReSharper disable once ClassNeverInstantiated.Global
 public class AlternateLabel
 {
-    [JsonPropertyName("fi")]
-    public List<string?> Fi { get; set; }
-    
-    [JsonPropertyName("sv")]
-    public List<string?> Sv { get; set; }
-    
-    [JsonPropertyName("en")]
-    public List<string?> En { get; set; }
+    [JsonPropertyName("fi")] public List<string?> Fi { get; set; } = null!;
+
+    [JsonPropertyName("sv")] public List<string?> Sv { get; set; } = null!;
+
+    [JsonPropertyName("en")] public List<string?> En { get; set; } = null!;
 }
 
-// ReSharper disable once ClassNeverInstantiated.Global
 public class PreferredLabel
 {
-    [JsonPropertyName("fi")]
-    public string? Fi { get; set; }
-    
-    [JsonPropertyName("sv")]
-    public string? Sv { get; set; }
-    
-    [JsonPropertyName("en")]
-    public string? En { get; set; }
+    [JsonPropertyName("fi")] public string? Fi { get; set; } = null!;
+    [JsonPropertyName("sv")] public string? Sv { get; set; } = null!;
+    [JsonPropertyName("en")] public string? En { get; set; } = null;
 }
-
-public enum LanguageCode
-{
-    [JsonPropertyName("fi")] Fi,
-    [JsonPropertyName("en")] En,
-    [JsonPropertyName("sv")] Sv
-}
-
