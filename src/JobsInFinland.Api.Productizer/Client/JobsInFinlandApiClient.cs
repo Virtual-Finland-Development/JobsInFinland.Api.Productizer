@@ -33,7 +33,7 @@ internal class JobsInFinlandApiClient : IJobsInFinlandApiClient
         if (cityNames.Any())
             cities = string.Join(",", cityNames);
 
-        var occupationNames = _occupationCodeMapper.GetNamesFromCodes(jobsRequest.Occupations);
+        var occupationNames = _occupationCodeMapper.GetNamesFromCodes(jobsRequest.Requirements.Occupations);
         if (occupationNames.Any())
             query = string.Join(" ", occupationNames);
 

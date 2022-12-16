@@ -6,8 +6,14 @@ public class JobsRequest
 {
     public string Query { get; set; } = null!;
     public LocationQuery Location { get; set; } = null!;
+    public Requirements Requirements { get; set; }
     public PagingOptions Paging { get; set; } = null!;
+}
+
+public class Requirements
+{
     public List<string> Occupations { get; set; } = null!;
+    public List<string> Skills { get; set; } = null!;
 }
 
 public class LocationQuery
