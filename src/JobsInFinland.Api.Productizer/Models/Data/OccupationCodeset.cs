@@ -41,5 +41,5 @@ public class PreferredLabel
 {
     [JsonPropertyName("fi")] public string? Fi { get; set; } = null!;
     [JsonPropertyName("sv")] public string? Sv { get; set; } = null!;
-    [JsonPropertyName("en")] public string? En { get; set; } = null;
+    [JsonPropertyName("en")] public string? En { get; set; } = null!;
 }
