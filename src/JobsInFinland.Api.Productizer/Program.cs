@@ -1,7 +1,6 @@
 using JobsInFinland.Api.Infrastructure.CodeGen.Model;
 using JobsInFinland.Api.Productizer.Client;
 using JobsInFinland.Api.Productizer.Middleware;
-using JobsInFinland.Api.Productizer.Models.Request;
 using JobsInFinland.Api.Productizer.Models.Testbed;
 using JobsInFinland.Api.Productizer.Services;
 using JobsInFinland.Api.Productizer.Services.Codeset;
@@ -58,7 +57,7 @@ if (!app.Environment.IsEnvironment("Local"))
 }
 
 app.MapPost("test/lassipatanen/Job/JobPosting", async (
-        JobsRequest query,
+        JobsPostingRequest query,
         [FromServices] IJobsInFinlandApiClient client) =>
     {
         IList<Job> queryResult;

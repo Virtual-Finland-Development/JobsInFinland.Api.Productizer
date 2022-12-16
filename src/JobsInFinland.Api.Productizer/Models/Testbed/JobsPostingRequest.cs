@@ -1,8 +1,8 @@
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace JobsInFinland.Api.Productizer.Models.Request;
+namespace JobsInFinland.Api.Productizer.Models.Testbed;
 
-public class JobsRequest
+public class JobsPostingRequest
 {
     public string Query { get; set; } = null!;
     public LocationQuery Location { get; set; } = null!;

@@ -1,6 +1,6 @@
 using System.Text;
 using System.Web;
-using JobsInFinland.Api.Productizer.Models.Request;
+using JobsInFinland.Api.Productizer.Models.Testbed;
 
 namespace JobsInFinland.Api.Productizer.Client;
 

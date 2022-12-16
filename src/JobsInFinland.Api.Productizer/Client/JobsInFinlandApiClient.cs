@@ -1,5 +1,5 @@
 using JobsInFinland.Api.Infrastructure.CodeGen.Model;
-using JobsInFinland.Api.Productizer.Models.Request;
+using JobsInFinland.Api.Productizer.Models.Testbed;
 using JobsInFinland.Api.Productizer.Services;
 
 namespace JobsInFinland.Api.Productizer.Client;
@@ -17,29 +17,29 @@ internal class JobsInFinlandApiClient : IJobsInFinlandApiClient
         _factory = factory;
     }
 
-    public async Task<IList<Job>> GetJobsAsync(JobsRequest jobsRequest)
+    public async Task<IList<Job>> GetJobsAsync(JobsPostingRequest jobsPostingRequest)
     {
         string? query = null;
         string? cities = null;
 
         var municipalityCodeMapper = _factory.CreateForMunicipalityCode();
-        var municipalityNames = municipalityCodeMapper.GetNamesFromCodes(jobsRequest.Location.Municipalities);
+        var municipalityNames = municipalityCodeMapper.GetNamesFromCodes(jobsPostingRequest.Location.Municipalities);
 
         if (municipalityNames.Any())
             cities = string.Join(",", municipalityNames);
 
         var occupationCodeMapper = _factory.CreateForOccupationCode();
-        var occupationNames = occupationCodeMapper.GetNamesFromCodes(jobsRequest.Requirements.Occupations);
+        var occupationNames = occupationCodeMapper.GetNamesFromCodes(jobsPostingRequest.Requirements.Occupations);
 
         if (occupationNames.Any())
             query = string.Join(" ", occupationNames);
 
-        if (!string.IsNullOrEmpty(jobsRequest.Query))
-            query = $"{query} {jobsRequest.Query}";
+        if (!string.IsNullOrEmpty(jobsPostingRequest.Query))
+            query = $"{query} {jobsPostingRequest.Query}";
 
         var requestUri = new RequestUriBuilder()
             .WithEndpoint("jobs")
-            .WithPaging(jobsRequest.Paging)
+            .WithPaging(jobsPostingRequest.Paging)
             .WithQuery(query)
             .WithCity(cities)
             .WithSorting("schedule.publish")
