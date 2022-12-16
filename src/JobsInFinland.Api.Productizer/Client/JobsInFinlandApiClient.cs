@@ -7,20 +7,14 @@ namespace JobsInFinland.Api.Productizer.Client;
 internal class JobsInFinlandApiClient : IJobsInFinlandApiClient
 {
     private readonly HttpClient _client;
+    private readonly ICodeMapperFactory _factory;
     private readonly ILogger<JobsInFinlandApiClient> _logger;
-    private readonly IMunicipalityCodeMapper _municipalityCodeMapper;
-    private readonly IOccupationCodeMapper _occupationCodeMapper;
 
-    public JobsInFinlandApiClient(
-        HttpClient client,
-        IMunicipalityCodeMapper municipalityCodeMapper,
-        IOccupationCodeMapper occupationCodeMapper,
-        ILogger<JobsInFinlandApiClient> logger)
+    public JobsInFinlandApiClient(HttpClient client, ILogger<JobsInFinlandApiClient> logger, ICodeMapperFactory factory)
     {
         _client = client;
-        _municipalityCodeMapper = municipalityCodeMapper;
-        _occupationCodeMapper = occupationCodeMapper;
         _logger = logger;
+        _factory = factory;
     }
 
     public async Task<IList<Job>> GetJobsAsync(JobsRequest jobsRequest)
@@ -28,12 +22,15 @@ internal class JobsInFinlandApiClient : IJobsInFinlandApiClient
         string? query = null;
         string? cities = null;
 
-        var cityNames = _municipalityCodeMapper.GetNamesFromCodes(jobsRequest.Location.Municipalities);
+        var municipalityCodeMapper = _factory.CreateForMunicipalityCode();
+        var municipalityNames = municipalityCodeMapper.GetNamesFromCodes(jobsRequest.Location.Municipalities);
 
-        if (cityNames.Any())
-            cities = string.Join(",", cityNames);
+        if (municipalityNames.Any())
+            cities = string.Join(",", municipalityNames);
 
-        var occupationNames = _occupationCodeMapper.GetNamesFromCodes(jobsRequest.Requirements.Occupations);
+        var occupationCodeMapper = _factory.CreateForOccupationCode();
+        var occupationNames = occupationCodeMapper.GetNamesFromCodes(jobsRequest.Requirements.Occupations);
+
         if (occupationNames.Any())
             query = string.Join(" ", occupationNames);
 
@@ -63,5 +60,7 @@ internal class JobsInFinlandApiClient : IJobsInFinlandApiClient
         return jobs;
     }
 }
+
+
 
 

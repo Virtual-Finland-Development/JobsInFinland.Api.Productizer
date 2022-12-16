@@ -13,10 +13,8 @@ builder.Services.AddSingleton<IAuthorizationService, AuthorizationService>();
 builder.Services.AddSingleton<IJobsInFinlandApiClient, JobsInFinlandApiClient>();
 
 builder.Services.AddSingleton<IMunicipalityCodesetService, MunicipalityCodesetService>();
-builder.Services.AddSingleton<IMunicipalityCodeMapper, MunicipalityCodeMapper>();
-
 builder.Services.AddSingleton<IOccupationCodesetService, OccupationCodesetService>();
-builder.Services.AddSingleton<IOccupationCodeMapper, OccupationCodeMapper>();
+builder.Services.AddSingleton<ICodeMapperFactory, CodeMapperFactory>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
