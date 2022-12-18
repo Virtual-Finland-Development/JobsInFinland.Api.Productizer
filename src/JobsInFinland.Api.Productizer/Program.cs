@@ -1,9 +1,11 @@
+using FluentValidation;
 using JobsInFinland.Api.Infrastructure.CodeGen.Model;
 using JobsInFinland.Api.Productizer.Client;
 using JobsInFinland.Api.Productizer.Middleware;
 using JobsInFinland.Api.Productizer.Models.Testbed;
 using JobsInFinland.Api.Productizer.Services;
 using JobsInFinland.Api.Productizer.Services.Codeset;
+using JobsInFinland.Api.Productizer.Services.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,8 @@ builder.Services.AddSingleton<IJobsInFinlandApiClient, JobsInFinlandApiClient>()
 builder.Services.AddSingleton<IMunicipalityCodesetService, MunicipalityCodesetService>();
 builder.Services.AddSingleton<IOccupationCodesetService, OccupationCodesetService>();
 builder.Services.AddSingleton<ICodeMapperFactory, CodeMapperFactory>();
+
+builder.Services.AddScoped<IValidator<JobsPostingRequest>, JobPostingRequestValidator>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -57,9 +61,16 @@ if (!app.Environment.IsEnvironment("Local"))
 }
 
 app.MapPost("test/lassipatanen/Job/JobPosting", async (
+        IValidator<JobsPostingRequest> validator,
         JobsPostingRequest query,
         [FromServices] IJobsInFinlandApiClient client) =>
     {
+        var validationResult = validator.Validate(query);
+        if (!validationResult.IsValid)
+        {
+            return Results.ValidationProblem(validationResult.ToDictionary());
+        }
+        
         IList<Job> queryResult;
 
         try
