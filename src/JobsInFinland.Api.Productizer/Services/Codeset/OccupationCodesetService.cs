@@ -23,14 +23,14 @@ public class OccupationCodesetService : IOccupationCodesetService
 
             foreach (var o in codeJsonObject)
             {
-                if (o.Uri == null || o.Notation == null || string.IsNullOrEmpty(o.PrefLabel.En)) continue;
+                if (string.IsNullOrEmpty(o.Uri) || string.IsNullOrEmpty(o.PrefLabel.En)) continue;
 
                 // Do not include entries that don't have correct URI format
                 var pattern = new Regex("\\WC[0-9]*");
                 var matches = pattern.Match(o.Uri);
                 if (!matches.Success) continue;
                 
-                _codes.TryAdd(o.Notation, o.PrefLabel.En);
+                _codes.TryAdd(o.Uri, o.PrefLabel.En);
             }
         }
         catch (Exception e)
