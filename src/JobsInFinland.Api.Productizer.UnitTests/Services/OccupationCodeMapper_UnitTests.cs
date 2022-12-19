@@ -16,7 +16,7 @@ public class OccupationCodeMapper_UnitTests
 
         var actual = sut.GetNamesFromCodes(new[] { "http://data.europa.eu/esco/isco/C01" });
 
-        actual.First().Should().BeEquivalentTo("Commissioned armed forces officers");
+        actual[0].Should().BeEquivalentTo("Commissioned armed forces officers");
     }
 
     [Test]
