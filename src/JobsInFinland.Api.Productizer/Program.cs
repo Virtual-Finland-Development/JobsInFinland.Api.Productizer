@@ -68,7 +68,7 @@ app.MapPost("test/lassipatanen/Job/JobPosting", async (
         var validationResult = validator.Validate(query);
         if (!validationResult.IsValid)
         {
-            return Results.ValidationProblem(validationResult.ToDictionary());
+            return Results.ValidationProblem(errors: validationResult.ToDictionary(), statusCode: 422);
         }
         
         IList<Job> queryResult;
