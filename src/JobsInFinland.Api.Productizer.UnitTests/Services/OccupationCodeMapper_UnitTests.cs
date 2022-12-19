@@ -14,7 +14,7 @@ public class OccupationCodeMapper_UnitTests
         IOccupationCodesetService service = new OccupationCodesetService();
         var sut = new OccupationCodeMapper(service);
 
-        var actual = sut.GetNamesFromCodes(new[] { "01" });
+        var actual = sut.GetNamesFromCodes(new[] { "http://data.europa.eu/esco/isco/C01" });
 
         actual.First().Should().BeEquivalentTo("Commissioned armed forces officers");
     }
