@@ -81,8 +81,8 @@ app.MapPost("test/lassipatanen/Job/JobPosting", async (
         {
             var statusCode = 500;
             if (e.StatusCode != null) statusCode = (int)e.StatusCode;
-
-            return Results.StatusCode(statusCode);
+            
+            return Results.Problem(e.ToString(), statusCode: statusCode);
         }
 
 
@@ -99,6 +99,7 @@ app.MapPost("test/lassipatanen/Job/JobPosting", async (
     })
     .Produces<JobPostingResponse>()
     .Produces(401)
+    .Produces<ValidationProblemDetails>(422)
     .Produces(500)
     .WithName("FindJobPostings");
 
