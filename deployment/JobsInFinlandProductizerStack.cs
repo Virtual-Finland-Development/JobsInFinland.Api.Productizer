@@ -6,6 +6,8 @@ using Pulumi.Aws.Lambda;
 using Pulumi.Aws.Lambda.Inputs;
 using Pulumi.Command.Local;
 
+namespace ProductizerStack;
+
 public class JobsInFinlandProductizerStack : Stack
 {
     public JobsInFinlandProductizerStack()

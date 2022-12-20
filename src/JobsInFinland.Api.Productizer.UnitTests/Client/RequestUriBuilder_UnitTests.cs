@@ -1,6 +1,6 @@
 using FluentAssertions;
 using JobsInFinland.Api.Productizer.Client;
-using JobsInFinland.Api.Productizer.Models.Request;
+using JobsInFinland.Api.Productizer.Models.Testbed;
 using Moq;
 
 namespace JobsInFinland.Api.Productizer.UnitTests.Client;

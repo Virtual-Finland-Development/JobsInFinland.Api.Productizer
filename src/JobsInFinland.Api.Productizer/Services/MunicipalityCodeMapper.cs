@@ -1,28 +1,27 @@
+using JobsInFinland.Api.Productizer.Services.Codeset;
+
 namespace JobsInFinland.Api.Productizer.Services;
 
-public class MunicipalityCodeMapper : ILocationCodeMapper
+public class MunicipalityCodeMapper : IMunicipalityCodeMapper
 {
-    private readonly IDictionary<string, string> _codes;
+    private readonly IDictionary<string, string> _codeset;
 
-    public MunicipalityCodeMapper(ICodesetService codesetService)
+    public MunicipalityCodeMapper(IMunicipalityCodesetService codesetService)
     {
-        _codes = codesetService.GetCodeset();
+        _codeset = codesetService.GetCodeset();
     }
 
-    public IReadOnlyList<string> GetNamesFromCodes(IEnumerable<string> municipalities)
+    public IReadOnlyList<string> GetNamesFromCodes(IEnumerable<string> codes)
     {
-        var codes = new List<string>();
+        var names = new List<string>();
 
-        foreach (var municipality in municipalities)
+        foreach (var code in codes)
         {
-            var codeNamePair = _codes.FirstOrDefault(o => o.Key == municipality);
-            if (codeNamePair is { Key: { }, Value: { } }) codes.Add(codeNamePair.Value);
+            var codeNamePair = _codeset.FirstOrDefault(o => o.Key == code);
+            if (codeNamePair is { Key: { }, Value: { } }) names.Add(codeNamePair.Value);
         }
 
-        return codes;
+        return names;
     }
 }
-
-
-
 

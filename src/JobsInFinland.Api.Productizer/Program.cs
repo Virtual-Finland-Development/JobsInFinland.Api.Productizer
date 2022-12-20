@@ -1,17 +1,23 @@
+using FluentValidation;
 using JobsInFinland.Api.Infrastructure.CodeGen.Model;
 using JobsInFinland.Api.Productizer.Client;
 using JobsInFinland.Api.Productizer.Middleware;
-using JobsInFinland.Api.Productizer.Models.Request;
 using JobsInFinland.Api.Productizer.Models.Testbed;
 using JobsInFinland.Api.Productizer.Services;
+using JobsInFinland.Api.Productizer.Services.Codeset;
+using JobsInFinland.Api.Productizer.Services.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<IAuthorizationService, AuthorizationService>();
 builder.Services.AddSingleton<IJobsInFinlandApiClient, JobsInFinlandApiClient>();
-builder.Services.AddSingleton<ICodesetService, CodesetService>();
-builder.Services.AddSingleton<ILocationCodeMapper, MunicipalityCodeMapper>();
+
+builder.Services.AddSingleton<IMunicipalityCodesetService, MunicipalityCodesetService>();
+builder.Services.AddSingleton<IOccupationCodesetService, OccupationCodesetService>();
+builder.Services.AddSingleton<ICodeMapperFactory, CodeMapperFactory>();
+
+builder.Services.AddScoped<IValidator<JobsPostingRequest>, JobPostingRequestValidator>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -55,10 +61,16 @@ if (!app.Environment.IsEnvironment("Local"))
 }
 
 app.MapPost("test/lassipatanen/Job/JobPosting", async (
-        HttpRequest request,
-        JobsRequest query,
+        IValidator<JobsPostingRequest> validator,
+        JobsPostingRequest query,
         [FromServices] IJobsInFinlandApiClient client) =>
     {
+        var validationResult = validator.Validate(query);
+        if (!validationResult.IsValid)
+        {
+            return Results.ValidationProblem(errors: validationResult.ToDictionary(), statusCode: 422);
+        }
+        
         IList<Job> queryResult;
 
         try
@@ -69,8 +81,8 @@ app.MapPost("test/lassipatanen/Job/JobPosting", async (
         {
             var statusCode = 500;
             if (e.StatusCode != null) statusCode = (int)e.StatusCode;
-
-            return Results.StatusCode(statusCode);
+            
+            return Results.Problem(e.ToString(), statusCode: statusCode);
         }
 
 
@@ -87,6 +99,7 @@ app.MapPost("test/lassipatanen/Job/JobPosting", async (
     })
     .Produces<JobPostingResponse>()
     .Produces(401)
+    .Produces<ValidationProblemDetails>(422)
     .Produces(500)
     .WithName("FindJobPostings");
 

@@ -37,7 +37,7 @@ namespace JobsInFinland.Api.Infrastructure.CodeGen.Model
         /// </summary>
         /// <param name="id">id.</param>
         /// <param name="confidence">confidence.</param>
-        public Tag(string id = default(string), int confidence = default(int))
+        public Tag(string id = default(string), decimal confidence = default(decimal))
         {
             this.Id = id;
             this.Confidence = confidence;
@@ -53,7 +53,7 @@ namespace JobsInFinland.Api.Infrastructure.CodeGen.Model
         /// Gets or Sets Confidence
         /// </summary>
         [DataMember(Name = "confidence", EmitDefaultValue = false)]
-        public int Confidence { get; set; }
+        public decimal Confidence { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

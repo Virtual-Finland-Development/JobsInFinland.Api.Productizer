@@ -1,6 +1,6 @@
 using FluentAssertions;
 using JobsInFinland.Api.Productizer.Services;
-using Moq;
+using JobsInFinland.Api.Productizer.Services.Codeset;
 
 namespace JobsInFinland.Api.Productizer.UnitTests.Services;
 
@@ -12,12 +12,12 @@ public class MunicipalityCodeMapper_UnitTests
     public void TryingToMapCode_WithValidCode_ShouldReturnName()
     {
         // Arrange
-        ICodesetService codesetService = new CodesetService();
+        IMunicipalityCodesetService codesetService = new MunicipalityCodesetService();
         var sut = new MunicipalityCodeMapper(codesetService);
 
         // Act
-        var actual = sut.GetNamesFromCodes(new []{"405"});
-        
+        var actual = sut.GetNamesFromCodes(new[] { "405" });
+
         // Assert
         actual.First().Should().BeEquivalentTo("Lappeenranta");
     }
@@ -26,13 +26,14 @@ public class MunicipalityCodeMapper_UnitTests
     public void TryingToMapCode_WithInvalidCode_ShouldReturnEmptyList()
     {
         // Arrange
-        ICodesetService service = new CodesetService();
+        IMunicipalityCodesetService service = new MunicipalityCodesetService();
         var sut = new MunicipalityCodeMapper(service);
-        
+
         // Act
         var actual = sut.GetNamesFromCodes(new[] { "xd" });
-        
+
         // Assert
         actual.Should().BeEmpty();
     }
 }
+
