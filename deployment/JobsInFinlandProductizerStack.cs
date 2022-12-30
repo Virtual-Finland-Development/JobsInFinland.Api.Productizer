@@ -68,6 +68,7 @@ public class JobsInFinlandProductizerStack : Stack
             Runtime = "dotnet6",
             Handler = "JobsInFinland.Api.Productizer",
             Timeout = 15,
+            MemorySize = 1024,
             Environment = new FunctionEnvironmentArgs
             {
                 Variables = new InputMap<string>
