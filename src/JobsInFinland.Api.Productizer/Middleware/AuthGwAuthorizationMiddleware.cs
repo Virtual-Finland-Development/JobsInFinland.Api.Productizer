@@ -5,14 +5,22 @@ namespace JobsInFinland.Api.Productizer.Middleware;
 public class AuthGwAuthorizationMiddleware
 {
     private readonly RequestDelegate _next;
+    private readonly AuthGwOptions _options;
 
-    public AuthGwAuthorizationMiddleware(RequestDelegate next)
+    public AuthGwAuthorizationMiddleware(RequestDelegate next, AuthGwOptions options)
     {
         _next = next;
+        _options = options;
     }
 
     public async Task Invoke(HttpContext context, IAuthorizationService service)
     {
+        if (_options.AllowedRequestPaths.Any(path => context.Request.Path == path))
+        {
+            await _next.Invoke(context);
+            return;
+        }
+
         try
         {
             await service.Authorize(context.Request);

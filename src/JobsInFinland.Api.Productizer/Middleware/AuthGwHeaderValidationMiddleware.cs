@@ -5,9 +5,9 @@ namespace JobsInFinland.Api.Productizer.Middleware;
 public class AuthGwHeaderValidationMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly AuthGwHeaderOptions _options;
+    private readonly AuthGwOptions _options;
 
-    public AuthGwHeaderValidationMiddleware(RequestDelegate next, AuthGwHeaderOptions options)
+    public AuthGwHeaderValidationMiddleware(RequestDelegate next, AuthGwOptions options)
     {
         _next = next;
         _options = options;
@@ -15,6 +15,13 @@ public class AuthGwHeaderValidationMiddleware
 
     public async Task Invoke(HttpContext context)
     {
+        // Skip allowed paths
+        if (_options.AllowedRequestPaths.Any(path => context.Request.Path == path))
+        {
+            await _next.Invoke(context);
+            return;
+        }
+
         var originHeaders =
             context.Request.Headers.ToDictionary(
                 x => x.Key.ToLowerInvariant(),
@@ -33,9 +40,9 @@ public class AuthGwHeaderValidationMiddleware
     public static bool IsHeaderValid(IReadOnlyDictionary<string, string> headers, string key)
     {
         if (headers.Count == 0) return false;
-        
+
         var hasValue = headers.TryGetValue(key, out var value);
-        
+
         if (!hasValue)
         {
             return false;

@@ -22,7 +22,7 @@ public class AuthGwHeaderValidationMiddleware_UnitTests
             {
                 builder
                     .UseTestServer()
-                    .ConfigureTestServices(services => { services.AddSingleton<AuthGwHeaderOptions>(); })
+                    .ConfigureTestServices(services => { services.AddSingleton<AuthGwOptions>(); })
                     .Configure(app =>
                     {
                         app.UseMiddleware<AuthGwHeaderValidationMiddleware>();
