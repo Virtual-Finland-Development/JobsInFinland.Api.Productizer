@@ -5,9 +5,9 @@ namespace JobsInFinland.Api.Productizer.Middleware;
 public class AuthGwAuthorizationMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly AuthGwOptions _options;
+    private readonly AuthGwRequestOptions _options;
 
-    public AuthGwAuthorizationMiddleware(RequestDelegate next, AuthGwOptions options)
+    public AuthGwAuthorizationMiddleware(RequestDelegate next, AuthGwRequestOptions options)
     {
         _next = next;
         _options = options;

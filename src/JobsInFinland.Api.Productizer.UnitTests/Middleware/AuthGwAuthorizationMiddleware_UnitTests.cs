@@ -22,7 +22,7 @@ public class AuthGwAuthorizationMiddleware_UnitTests
             {
                 builder
                     .UseTestServer()
-                    .ConfigureTestServices(services => { services.AddSingleton<AuthGwOptions>(); })
+                    .ConfigureTestServices(services => { services.AddSingleton<AuthGwRequestOptions>(); })
                     .ConfigureServices(services =>
                     {
                         services.AddSingleton<IAuthorizationService, AuthorizationService>();
