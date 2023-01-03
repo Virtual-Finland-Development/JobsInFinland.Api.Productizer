@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Moq;
 
 namespace JobsInFinland.Api.Productizer.UnitTests.Middleware;
 
@@ -23,12 +22,21 @@ public class AuthGwAuthorizationMiddleware_UnitTests
             {
                 builder
                     .UseTestServer()
+                    .ConfigureTestServices(services => { services.AddSingleton<AuthGwRequestOptions>(); })
                     .ConfigureServices(services =>
                     {
                         services.AddSingleton<IAuthorizationService, AuthorizationService>();
                         services.AddHttpClient<IAuthorizationService, AuthorizationService>();
                     })
-                    .Configure(app => app.UseMiddleware<AuthGwAuthorizationMiddleware>());
+                    .Configure(app =>
+                    {
+                        app.UseMiddleware<AuthGwAuthorizationMiddleware>();
+                        app.UseAuthGwAuthorization(options =>
+                        {
+                            var allowed = options.AllowedRequestPaths;
+                            allowed.Add("/wake-up");
+                        });
+                    });
             })
             .StartAsync();
         var actual = await host.GetTestClient().GetAsync("/");

@@ -4,25 +4,30 @@ namespace JobsInFinland.Api.Productizer.Middleware;
 
 public static class AuthGwBuilderExtensions
 {
-    public static IApplicationBuilder UseAuthGwAuthorization(this IApplicationBuilder builder)
+    public static IApplicationBuilder UseAuthGwAuthorization(this IApplicationBuilder builder, Action<AuthGwRequestOptions>? setupAction)
     {
-        return builder.UseMiddleware<AuthGwAuthorizationMiddleware>();
+        AuthGwRequestOptions options;
+        using (var scope = builder.ApplicationServices.CreateScope())
+        {
+            options = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<AuthGwRequestOptions>>().Value;
+            setupAction?.Invoke(options);
+        }
+        return builder.UseMiddleware<AuthGwAuthorizationMiddleware>(options);
     }
 
-
     private static IApplicationBuilder UseAuthGwHeaderValidation(this IApplicationBuilder builder,
-        AuthGwHeaderOptions options)
+        AuthGwRequestOptions options)
     {
         return builder.UseMiddleware<AuthGwHeaderValidationMiddleware>(options);
     }
 
     public static IApplicationBuilder UseAuthGwHeaderValidation(this IApplicationBuilder builder,
-        Action<AuthGwHeaderOptions>? setupAction)
+        Action<AuthGwRequestOptions>? setupAction)
     {
-        AuthGwHeaderOptions options;
+        AuthGwRequestOptions options;
         using (var scope = builder.ApplicationServices.CreateScope())
         {
-            options = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<AuthGwHeaderOptions>>().Value;
+            options = scope.ServiceProvider.GetRequiredService<IOptionsSnapshot<AuthGwRequestOptions>>().Value;
             setupAction?.Invoke(options);
         }
 
