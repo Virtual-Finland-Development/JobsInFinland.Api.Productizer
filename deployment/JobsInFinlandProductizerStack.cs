@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Pulumi;
 using Pulumi.Aws.Iam;
 using Pulumi.Aws.Lambda;
