@@ -80,6 +80,7 @@ public class JobsInFinlandProductizerStack : Stack
             Tags = tags,
             Code = new FileArchive(artifactPath)
         });
+        LambdaId = lambdaFunction.Name;
 
         var functionUrl = new FunctionUrl($"{projectName}-function-url-{environment}", new FunctionUrlArgs
         {
@@ -105,4 +106,5 @@ public class JobsInFinlandProductizerStack : Stack
     }
 
     [Output] public Output<string> ApplicationUrl { get; set; }
+    [Output] public Output<string> LambdaId { get; set; }
 }
